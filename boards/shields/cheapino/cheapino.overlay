@@ -2,9 +2,7 @@
 // Although physically the Cheapino is a wired split, for the purposes
 // of ZMK we will treat it as a unibody keyboard, since the matrix is
 // fully wired across the 8p8c connector, needing no controller on the
-// right side. The right side rows will be just after the left side
-// rows. Likewise, the right side columns will be just after the left
-// side columns.
+// right side.
 
 #include <dt-bindings/zmk/matrix_transform.h>
 #include "cheapino-layout.dtsi"
