@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2025 Allister MacLeod
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 // cheapino.overlay - DTS overlay for Cheapino keyboard.
 // Although physically the Cheapino is a wired split, for the purposes
 // of ZMK we will treat it as a unibody keyboard, since the matrix is
