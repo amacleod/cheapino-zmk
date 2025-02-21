@@ -1,0 +1,5 @@
+---
+name: zmk-keyboard-cheapino
+build:
+  settings:
+    board_root: .

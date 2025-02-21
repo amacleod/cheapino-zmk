@@ -1,0 +1,51 @@
+// cheapino.overlay - DTS overlay for Cheapino keyboard.
+// Although physically the Cheapino is a wired split, for the purposes
+// of ZMK we will treat it as a unibody keyboard, since the matrix is
+// fully wired across the 8p8c connector, needing no controller on the
+// right side. The right side rows will be just after the left side
+// rows. Likewise, the right side columns will be just after the left
+// side columns.
+
+#include "cheapino-layout.dtsi"
+
+/ {
+    chosen {
+        zmk,kscan = &cheapino_scan;
+        zmk,physical-layout = &cheapino_layout;
+        transform = <&default_transform>;
+    };
+
+    default_transform: keymap_transform0 {
+        compatible = "zmk,matrix-transform";
+        columns = <12>;
+        rows = <12>;
+        map = <
+            RC(0,5) RC(4,0) RC(0,4) RC(3,0) RC(0,3)    RC(6,9)  RC(9,6) RC(6,10) RC(10,6) RC(6,11)
+            RC(1,5) RC(4,1) RC(1,4) RC(3,1) RC(1,3)    RC(7,9)  RC(9,7) RC(7,10) RC(10,7) RC(7,11)
+            RC(2,5) RC(4,2) RC(2,4) RC(3,2) RC(2,3)    RC(8,9)  RC(9,8) RC(8,10) RC(10,8) RC(8,11)
+                            RC(5,2) RC(5,1) RC(5,0)   RC(11,6) RC(11,7) RC(11,8)
+        >;
+    };
+
+    kscan0: kscan0 {
+        compatible = "zmk,kscan-gpio-charlieplex";
+        wakeup-source;
+
+        gpios
+            = <&zero_d 27 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&zero_d 28 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&zero_d 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&zero_d 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&zero_d 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&zero_d 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&zero_d 26 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&zero_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&zero_d 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&zero_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&zero_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&zero_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&zero_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&zero_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            ;
+    };
+};
