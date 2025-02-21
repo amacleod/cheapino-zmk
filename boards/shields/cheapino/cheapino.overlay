@@ -6,6 +6,7 @@
 // rows. Likewise, the right side columns will be just after the left
 // side columns.
 
+#include <dt-bindings/zmk/matrix_transform.h>
 #include "cheapino-layout.dtsi"
 
 / {
