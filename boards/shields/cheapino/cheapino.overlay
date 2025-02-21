@@ -25,10 +25,10 @@
         columns = <12>;
         rows = <12>;
         map = <
-            RC(0,6) RC(5,0) RC(0,5) RC(4,0) RC(0,4)    RC(7,10)  RC(10,7) RC(8,10) RC(10,8) RC(9,10)
-            RC(1,6) RC(5,1) RC(1,5) RC(4,1) RC(1,4)    RC(10,10)  RC(8,12) RC(12,9) RC(9,12) RC(13,9)
-            RC(2,6) RC(5,2) RC(2,5) RC(4,2) RC(2,4)    RC(10,9)  RC(9,12) RC(12,9) RC(9,13) RC(13,8)
-                            RC(6,2) RC(6,1) RC(6,0)   RC(7,13) RC(8,12) RC(9,13)
+            RC(0,6) RC(5,0) RC(0,5) RC(4,0) RC(0,4)     RC(7,10) RC(10,7)   RC(7,9) RC(9,7)   RC(7,8)
+            RC(1,6) RC(5,1) RC(1,5) RC(4,1) RC(1,4)    RC(12,10) RC(10,12) RC(12,9) RC(9,12) RC(12,8)
+            RC(2,6) RC(5,2) RC(2,5) RC(4,2) RC(2,4)    RC(13,10) RC(10,13) RC(13,9) RC(9,13) RC(13,8)
+                            RC(6,2) RC(6,1) RC(6,0)    RC(8,7) RC(8,12) RC(8,13)
         >;
     };
 
@@ -36,15 +36,44 @@
         compatible = "zmk,kscan-gpio-charlieplex";
         wakeup-source;
 
+// Cheapino Charlieplex cheat sheet:
+// (###) = impossible
+// (---) = unused in this keymap
+//     0   1   2   3   4   5   6
+// 0  ### --- --- --- LT0 LT2 LT4
+// 1  --- ### --- --- LM0 LM2 LM4
+// 2  --- --- ### --- LB0 LB2 LB4
+// 3  --- --- --- ### --- --- ---
+// 4  LT1 LM1 LB1 --- ### --- ---
+// 5  LT3 LM3 LB3 --- --- ### ---
+// 6  LH0 LH1 LH2 --- --- --- ###
+//
+//     7   8   9   10  11  12  13
+// 7  ### RT4 RT2 RT0 --- --- ---
+// 8  RH0 ### --- --- --- RH1 RH2
+// 9  RT3 --- ### --- --- RM3 RB3
+// 10 RT1 --- --- ### --- RM1 RB1
+// 11 --- --- --- --- ### --- ---
+// 12 --- RM4 RM2 RM0 --- ### ---
+// 13 --- RB4 RB2 RB0 --- --- ###
+//
+// Patterns observed:
+//  - elements 3 and 11 do not need to be part of the Charlieplex
+//    (unless maybe they are useful as interrupt lines?); on the
+//    schematic, "Row4" seems to be attached to the rotary encoder.
+//  - the right hand side seems to be "wrapped"; maybe I could
+//    compensate for that by changing the order of the right hand
+//    pins.
+
         gpios
             = <&zero_d 27 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> //  0: Row1L
             , <&zero_d 28 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> //  1: Row2L
             , <&zero_d 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> //  2: Row3L
             , <&zero_d 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  //  3: Row4L
-            , <&zero_d 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> //  4: Col1L
-            , <&zero_d 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> //  5: Col2L
-            , <&zero_d 26 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> //  6: Col3L
-            , <&zero_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  //  7: Row1R or Col1R?
+            , <&zero_d 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> //  4: Col1L (columns 0 and 1)
+            , <&zero_d 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> //  5: Col2L (columns 2 and 3)
+            , <&zero_d 26 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> //  6: Col3L (column 4 and thumbs)
+            , <&zero_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  //  7: Row1R
             , <&zero_d 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  //  8: Row2R
             , <&zero_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  //  9: Row3R
             , <&zero_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  // 10: Row4R or Row1R?
