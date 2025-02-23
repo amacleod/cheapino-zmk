@@ -43,7 +43,7 @@
 // Cheapino Charlieplex cheat sheet:
 // (###) = impossible
 // (xxx) = unused because opposite hand
-// (---) = unused in this keymap
+// (---) = not assigned to any switch
 //     0   1   2   3   4   5   6   7   8   9  10  11
 // 0  ### --- --- LT0 LT2 LT4 xxx xxx xxx xxx xxx xxx
 // 1  --- ### --- LM0 LM2 LM4 xxx xxx xxx xxx xxx xxx
